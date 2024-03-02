@@ -1,8 +1,10 @@
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <pthread.h>
 #include "arch/x86/include/generated/uapi/asm/unistd_64.h"
-
+#define NUM_THREADS 10
 
 
 void testBasicFunc(){
@@ -156,19 +158,80 @@ void testGetEmpty(){
     printf("the message: %s\n", msg);
 }
 
+void testBadAdr(){
+    char *in;
+    char msg[99];
+    long msglen;
+
+
+    syscall(__NR_dm510_msgbox_put, in, strlen(in));
+
+    msglen = syscall(__NR_dm510_msgbox_get, msg, 99);
+    printf("message length: %ld\n", msglen);
+    printf("the message: %s\n", msg);
+}
+
+void testNULLAdr(){
+    char *in = NULL;
+    char msg[99];
+    long msglen;
+
+
+    syscall(__NR_dm510_msgbox_put, in, strlen(in));
+
+    msglen = syscall(__NR_dm510_msgbox_get, msg, 99);
+    printf("message length: %ld\n", msglen);
+    printf("the message: %s\n", msg);
+}
+
+void* test_msgbox_concurrency(void* arg) {
+    char *in = "Concurrent message test";
+    char msg[102];
+    long msglen;
+
+    // Put a message into the box
+    syscall(__NR_dm510_msgbox_put, in, strlen(in));
+
+    // Get a message from the box
+    msglen = syscall(__NR_dm510_msgbox_get, msg, sizeof(msg)-1);
+    msg[msglen] = '\0'; // Ensure null-termination
+
+    printf("Thread %ld: message length: %ld\n", pthread_self(), msglen);
+    printf("Thread %ld: the message: %s\n", pthread_self(), msg);
+
+    return NULL;
+}
+
+void testConcurrency() {
+
+    pthread_t threads[NUM_THREADS];
+    int i;
+
+    for (i = 0; i < NUM_THREADS; i++) {
+        pthread_create(&threads[i], NULL, test_msgbox_concurrency, NULL);
+    }
+
+    for (i = 0; i < NUM_THREADS; i++) {
+        pthread_join(threads[i], NULL);
+    }
+}
 
 int main(int argc, char ** argv) {
     printf("\n");
     printf("Basic function test:\n");
     testBasicFunc();
     printf("\n");
-s
+
     printf("Zero length test:\n");
     testZeroLeng();
     printf("\n");
 
     printf("One length test:\n");
     testOneLeng();
+    printf("\n");
+
+    printf("Concurrency test:\n");
+    testConcurrency();
     printf("\n");
 
     printf("100 length test:\n");
@@ -190,5 +253,16 @@ s
     printf("Empty stack test:\n");
     testGetEmpty();
     printf("\n");
-}
 
+    printf("Bad address test:\n");
+    testBadAdr();
+    printf("\n");
+
+    printf("Null address test:\n");
+    testNULLAdr();
+    printf("\n");
+
+
+
+    return 0;
+}

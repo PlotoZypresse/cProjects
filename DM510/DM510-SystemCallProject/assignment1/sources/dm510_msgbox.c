@@ -77,12 +77,7 @@ int dm510_msgbox_get(char* buffer, int length){
     if(top != NULL) {
         msgStack* msg = top;
         int msgLength = msg->length;
-        if(msgLength <= 0){
-            return -EINVAL;
-        }
-        if(msgLength > 101){
-            return -EINVAL;
-        }
+
         top = msg->previous;
 
         if(!access_ok(buffer, length)){
