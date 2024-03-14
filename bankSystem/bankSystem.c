@@ -47,8 +47,14 @@ int main(int argc, char *argv[])
   if(myAcc == NULL){
      printf("Something went wrong. No account was created");
   }
+  
+  float depositAm;
 
-  deposit(69.69, myAcc);
+  printf("Please enter amount to deposit: \n");
+  scanf("%f\n", &depositAm); 
+
+  deposit(depositAm, myAcc);
+  printf("deposit done");
 
 
   free(myAcc->accName);
