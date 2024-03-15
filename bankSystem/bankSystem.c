@@ -41,6 +41,56 @@ void deposit(float amount, struct acc* account)
   }
 }
 
+//User interface
+int interface(){
+  
+  printf(
+    "==================================================\n"
+    " Welcome to the Simple Bank Management System\n"
+    "==================================================\n"
+    "\n"
+    "Please choose an option:\n"
+    "1. Create a New Account\n"
+    "2. Deposit into Account\n"
+    "3. Exit\n"
+    "\n"
+    "Enter your choice (1-3): "
+  );
+  
+  int choice;
+  char nameAccount[30];
+  int depo;
+
+  scanf("%d", &choice);
+  if(choice<1 || choice>3){
+    printf("invalid input");
+    return 1;
+  }
+
+  switch(choice){
+
+    case 1:
+      printf("Please input an account name\n")
+        scanf("%s", nameAccount);
+      createAcc(name);
+      break;
+
+    case 2:
+      printf("Please enter the amount you want to deposit\n");
+        scanf("%f", depo);
+      deposit(depo, nameAccount);
+      break;
+
+      case 3:
+      printf("thank you\n");
+      exit(0);
+
+    default:
+      printf("invalid option please try again\n");
+  }
+}
+
+
 int main(int argc, char *argv[])
 {
   struct acc* myAcc = createAcc("Peter Griffin");
@@ -51,10 +101,16 @@ int main(int argc, char *argv[])
   float depositAm;
 
   printf("Please enter amount to deposit: \n");
-  scanf("%f\n", &depositAm); 
+  if(scanf("%f", &depositAm) != 1){
+    printf("Failed to read the deposit amount.\n");
+        free(myAcc->accName);
+        free(myAcc);
+        return 1;
+  }
 
   deposit(depositAm, myAcc);
-  printf("deposit done");
+  printf("deposit done\n");
+
 
 
   free(myAcc->accName);
