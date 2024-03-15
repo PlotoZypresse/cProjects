@@ -59,7 +59,7 @@ int interface(){
   
   int choice;
   char nameAccount[30];
-  int depo;
+  float depo;
 
   scanf("%d", &choice);
   if(choice<1 || choice>3){
@@ -67,56 +67,42 @@ int interface(){
     return 1;
   }
 
-  switch(choice){
+    switch(choice){
 
     case 1:
-      printf("Please input an account name\n")
+      printf("Please input an account name\n"),
         scanf("%s", nameAccount);
-      createAcc(name);
+      struct acc* myAcc = createAcc(nameAccount);
+      if(myAcc == NULL){
+        printf("Something went wrong. No account was created");
+        free(myAcc->accName);
+        free(myAcc);
+      }
       break;
 
     case 2:
       printf("Please enter the amount you want to deposit\n");
-        scanf("%f", depo);
-      deposit(depo, nameAccount);
+        if(scanf("%f", &depo) != 1){
+          printf("Failed to read the deposit amount.\n");
+      }
+      deposit(depo, myAcc);
       break;
-
-      case 3:
+    
+    case 3:
       printf("thank you\n");
       exit(0);
 
     default:
       printf("invalid option please try again\n");
   }
+
+  return 0;
 }
 
 
 int main(int argc, char *argv[])
 {
-  struct acc* myAcc = createAcc("Peter Griffin");
-  if(myAcc == NULL){
-     printf("Something went wrong. No account was created");
-  }
-  
-  float depositAm;
-
-  printf("Please enter amount to deposit: \n");
-  if(scanf("%f", &depositAm) != 1){
-    printf("Failed to read the deposit amount.\n");
-        free(myAcc->accName);
-        free(myAcc);
-        return 1;
-  }
-
-  deposit(depositAm, myAcc);
-  printf("deposit done\n");
-
-
-
-  free(myAcc->accName);
-  free(myAcc);
-
-
+  interface();
   return 0;
 }
 
