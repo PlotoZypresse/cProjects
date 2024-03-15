@@ -16,7 +16,7 @@ struct acc* createAcc(char* name);
 void deposit(float amount, struct acc* account);
 void withdraw(float amount, struct acc* account);
 void transfer(float amount, struct acc* fromAcc, struct acc* toAcc);
-
+float getBalance(struct acc* account);
 int interface();
 
 #endif
