@@ -41,7 +41,7 @@ void deposit(float amount, struct acc* account)
 
  //User interface
 int interface(){
-  
+ 
   printf(
     "==================================================\n"
     " Welcome to the BigusBank Management System\n"
@@ -60,7 +60,7 @@ int interface(){
   float depo;
 
   scanf("%d", &choice);
-  if(choice<1 || choice>3){
+    if(choice<1 || choice>3){
     printf("invalid input");
     return 1;
   }
@@ -97,8 +97,9 @@ int interface(){
 
     default:
       printf("invalid option please try again\n");
-  }
+    }
+  
 
   return 0;
-} 
+  } 
 

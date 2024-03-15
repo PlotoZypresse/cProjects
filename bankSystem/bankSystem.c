@@ -5,7 +5,12 @@
 
 int main(int argc, char *argv[])
 {
-  interface();
+  while(1){
+    if(interface() == 3){
+      break;
+    }
+  }
+
   return 0;
 }
 
