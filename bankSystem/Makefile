@@ -9,7 +9,7 @@ CFLAGS=-Wall -g
 TARGET=bankSystem
 
 # Source files
-SRC=bankSystem.c bankAcc.c
+SRC=bankSystem.c bankAcc.c bankLL.c
 
 # Build target
 $(TARGET): $(SRC)

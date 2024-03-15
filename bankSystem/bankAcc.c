@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bankAcc.h"
+#include "bankLL.h"
 
-
+struct accNode* head = NULL;
 
 static int accNumbers = 0;
 
@@ -17,8 +18,12 @@ struct acc* createAcc(char* name)
     newAcc->accName = strdup(name); 
     newAcc->accBalance = 0.0;
     newAcc->accNumber = accNumbers++;
+    addAccount(&head, newAcc);  
+    
 
     printf("New account with name %s has been created and account Number %d\n", newAcc->accName, newAcc->accNumber);
+    printf("Please remeber your account number to keep acces to your account\n");
+    printf("Your account number is %d\n", newAcc->accNumber);
     printf("Account Balance %.2f\n", newAcc->accBalance);
 
     return newAcc;
@@ -29,7 +34,7 @@ struct acc* createAcc(char* name)
 // deposit into existing account
 void deposit(float amount, struct acc* account)
 {
-  if(account != NULL && amount > 0){
+  if(amount > 0){
     account->accBalance += amount;
     printf("%.2f have been deposited into your account(%s). Your new balance is now %.2f\n"
            , amount, account->accName, account->accBalance);
@@ -41,7 +46,6 @@ void deposit(float amount, struct acc* account)
 
  //User interface
 int interface(){
- 
   printf(
     "==================================================\n"
     " Welcome to the BigusBank Management System\n"
@@ -58,6 +62,7 @@ int interface(){
   int choice;
   char nameAccount[30];
   float depo;
+  int accNumberDepo;
 
   scanf("%d", &choice);
     if(choice<1 || choice>3){
@@ -69,26 +74,24 @@ int interface(){
 
     case 1:
       printf("Please input an account name\n"),
-        scanf("%s", nameAccount);
-      struct acc* myAcc = createAcc(nameAccount);
-      if(myAcc == NULL){
-        printf("Something went wrong. No account was created");
-        free(myAcc->accName);
-        free(myAcc);
-      }
+      scanf("%s", nameAccount);
+      createAcc(nameAccount);
       break;
 
     case 2:
-      if(myAcc == NULL){
-        printf("Please create an account first");
-      }else{
+      printf("Pleas input the account number of your account\n");
+      scanf("%d", &accNumberDepo);
+        
       printf("Please enter the amount you want to deposit\n");
-        if(scanf("%f", &depo) != 1){
-          printf("Failed to read the deposit amount.\n");
-        }else{
-          deposit(depo, myAcc);
-        }
+      scanf("%f", &depo);
+
+      struct acc* depositAcc = findAcc(head, accNumberDepo);
+      if(depositAcc != NULL){
+        deposit(depo, depositAcc);
       }
+      else {
+        printf("account number %d not found. \n", accNumberDepo);
+      } 
       break;
     
     case 3:
@@ -98,7 +101,6 @@ int interface(){
     default:
       printf("invalid option please try again\n");
     }
-  
 
   return 0;
   } 

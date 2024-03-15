@@ -28,11 +28,12 @@ void addAccount(struct accNode** head, struct acc *newAccount){
 }  
 
 struct acc* findAcc(struct accNode* head, int accNumber){
-  while(head != NULL){
-    if(head->account->accNumber == accNumber){
-      return head->account;
+  struct accNode* current = head;
+  while(current != NULL){
+    if(current->account->accNumber == accNumber){
+      return current->account;
     }
-    head = head -> next;
+    current = current -> next;
   }
   return NULL;
 } 

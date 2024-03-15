@@ -7,10 +7,6 @@ struct acc {
     char* accName;
 };
 
-struct accNode{
-  struct acc* account;
-  struct accNode* next;
-};
 
 
 struct acc* createAcc(char* name);
