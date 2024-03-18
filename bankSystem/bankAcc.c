@@ -40,7 +40,7 @@ void deposit(float amount, struct acc* account)
            , amount, account->accName, account->accBalance);
   }
   else {
-    printf("Deposti failed\n");  
+    printf("Deposit failed\n");
   }
 }
 
