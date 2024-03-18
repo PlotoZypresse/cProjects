@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
   while(1){
-    if(interface() == 3){
+    if(interface() == 9){
         break;
     }
   }

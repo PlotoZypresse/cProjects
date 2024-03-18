@@ -9,7 +9,7 @@ struct accNode{
 extern struct accNode* head;
 
 void addAccount(struct accNode** head, struct acc* newAccount);
-
+void removeAcc();
 struct acc* findAcc(struct accNode* head, int accNumber);
 
 #endif
