@@ -53,6 +53,14 @@ void withdraw(float amount, struct acc* account){
     }
 }
 
+void transfer(float amount, struct acc* fromAcc, struct acc* toAcc){
+
+}
+
+void getBalance(struct acc* account){
+    printf("Your balance is %.2f\n", account -> accBalance);
+}
+
  //User interface
 int interface(){
     printf(
@@ -64,6 +72,7 @@ int interface(){
         "1. Create a New Account\n"
         "2. Deposit into Account\n"
         "3. Withdraw from Account\n"
+        "4. Get account balance\n"
         "9. Exit\n"
         "\n"
         "Enter your choice (1-3): "
@@ -114,6 +123,18 @@ int interface(){
             struct acc* withdrawAcc = findAcc(head, accNumberDepo);
             if(withdrawAcc != NULL){
                 withdraw(depo, withdrawAcc);
+            }
+            else {
+                printf("account number %d not found. \n", accNumberDepo);
+            }
+            break;
+
+        case 4:
+            printf("Pleas input the account number of your account\n");
+            scanf("%d", &accNumberDepo);
+            struct acc* balanceAcc = findAcc(head, accNumberDepo);
+            if(balanceAcc != NULL){
+                getBalance(balanceAcc);
             }
             else {
                 printf("account number %d not found. \n", accNumberDepo);
