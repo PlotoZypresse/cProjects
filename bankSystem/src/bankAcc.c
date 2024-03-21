@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct accNode *head = NULL;
+struct accNode *globalHead = NULL;
 
 static int accNumbers = 0;
 
@@ -17,7 +17,7 @@ struct acc *createAcc(char *name) {
     newAcc->accName = strdup(name);
     newAcc->accBalance = 0.0;
     newAcc->accNumber = accNumbers++;
-    addAccount(&head, newAcc);
+    addAccount(&globalHead, newAcc);
 
     printf("New account with name %s has been created and account Number %d\n",
            newAcc->accName, newAcc->accNumber);
@@ -28,7 +28,7 @@ struct acc *createAcc(char *name) {
 
     return newAcc;
   }
-  return 0;
+  return NULL;
 }
 
 // deposit into existing account
@@ -55,7 +55,7 @@ void withdraw(float amount, struct acc *account) {
 }
 
 // transfer from an account to another
-void transfer(float amount, struct acc *fromAcc, struct acc *toAcc) {}
+// void transfer(float amount, struct acc *fromAcc, struct acc *toAcc) {}
 
 // prints the balance of a specific account
 void getBalance(struct acc *account) {

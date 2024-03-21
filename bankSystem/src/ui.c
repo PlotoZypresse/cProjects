@@ -5,7 +5,7 @@
 #include <string.h>
 
 // User interface
-int interface() {
+int interface(void) {
   printf("==================================================\n"
          " Welcome to the BigusBank Management System\n"
          "==================================================\n"
@@ -43,7 +43,7 @@ int interface() {
     printf("Please enter the amount you want to deposit\n");
     scanf("%f", &depo);
 
-    struct acc *depositAcc = findAcc(head, accNumberDepo);
+    struct acc *depositAcc = findAcc(globalHead, accNumberDepo);
     if (depositAcc != NULL) {
       deposit(depo, depositAcc);
     } else {
@@ -58,7 +58,7 @@ int interface() {
     printf("Please enter the amount you want to withdraw\n");
     scanf("%f", &depo);
 
-    struct acc *withdrawAcc = findAcc(head, accNumberDepo);
+    struct acc *withdrawAcc = findAcc(globalHead, accNumberDepo);
     if (withdrawAcc != NULL) {
       withdraw(depo, withdrawAcc);
     } else {
@@ -69,7 +69,7 @@ int interface() {
   case 4:
     printf("Pleas input the account number of your account\n");
     scanf("%d", &accNumberDepo);
-    struct acc *balanceAcc = findAcc(head, accNumberDepo);
+    struct acc *balanceAcc = findAcc(globalHead, accNumberDepo);
     if (balanceAcc != NULL) {
       getBalance(balanceAcc);
     } else {
