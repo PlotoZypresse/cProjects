@@ -15,6 +15,7 @@ int interface(void) {
          "2. Deposit into Account\n"
          "3. Withdraw from Account\n"
          "4. Get account balance\n"
+         "5. Transfer funds from Account to Account\n"
          "9. Exit\n"
          "\n"
          "Enter your choice (1-3): ");
@@ -22,7 +23,10 @@ int interface(void) {
   int choice;
   char nameAccount[30];
   float depo;
+  float transferAmount;
   int accNumberDepo;
+  int accNumberFrom;
+  int accNumberTo;
 
   scanf("%d", &choice);
   if (choice < 1 || choice > 10) {
@@ -31,11 +35,14 @@ int interface(void) {
   }
 
   switch (choice) {
+
+    // create account
   case 1:
     printf("Please input an account name\n"), scanf("%s", nameAccount);
     createAcc(nameAccount);
     break;
 
+    // deposit into account
   case 2:
     printf("Pleas input the account number of your account\n");
     scanf("%d", &accNumberDepo);
@@ -51,6 +58,7 @@ int interface(void) {
     }
     break;
 
+    // withdraw from account
   case 3:
     printf("Pleas input the account number of your account\n");
     scanf("%d", &accNumberDepo);
@@ -66,6 +74,7 @@ int interface(void) {
     }
     break;
 
+    // get account balance
   case 4:
     printf("Pleas input the account number of your account\n");
     scanf("%d", &accNumberDepo);
@@ -75,6 +84,25 @@ int interface(void) {
     } else {
       printf("account number %d not found. \n", accNumberDepo);
     }
+    break;
+
+    // Transfer funds
+  case 5:
+    printf("Pleas input the account number of your account\n");
+    scanf("%d", &accNumberFrom);
+
+    printf("Pleas input the account number of the account you want to transfer "
+           "to\n");
+    scanf("%d", &accNumberTo);
+
+    printf("How much do you want to transfer?\n");
+    scanf("%f", &transferAmount);
+
+    struct acc *accFrom = findAcc(globalHead, accNumberFrom);
+    struct acc *accTo = findAcc(globalHead, accNumberTo);
+
+    transfer(transferAmount, accFrom, accTo);
+
     break;
 
   case 9:

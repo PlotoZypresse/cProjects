@@ -55,7 +55,14 @@ void withdraw(float amount, struct acc *account) {
 }
 
 // transfer from an account to another
-// void transfer(float amount, struct acc *fromAcc, struct acc *toAcc) {}
+void transfer(float amount, struct acc *fromAcc, struct acc *toAcc) {
+  if (amount <= 0) {
+    printf("You can not transfer 0 or less money");
+  } else {
+    fromAcc->accBalance -= amount;
+    toAcc->accBalance += amount;
+  }
+}
 
 // prints the balance of a specific account
 void getBalance(struct acc *account) {
