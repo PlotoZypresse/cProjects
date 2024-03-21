@@ -42,7 +42,7 @@ void deposit(float amount, struct acc *account) {
     printf("Deposit failed\n");
   }
 }
-
+// withdraw from specific account
 void withdraw(float amount, struct acc *account) {
   if (amount > 0 || amount < account->accBalance) {
     account->accBalance -= amount;
@@ -54,8 +54,10 @@ void withdraw(float amount, struct acc *account) {
   }
 }
 
+// transfer from an account to another
 void transfer(float amount, struct acc *fromAcc, struct acc *toAcc) {}
 
+// prints the balance of a specific account
 void getBalance(struct acc *account) {
   printf("Your balance is %.2f\n", account->accBalance);
 }
